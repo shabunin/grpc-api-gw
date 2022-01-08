@@ -1,0 +1,8 @@
+clients:
+  - dial: "localhost:50051"
+  - dial: "localhost:50052"
+server:
+  listen: ":42001"
+blacklist:
+  - "/grpc.examples.echo.Echo/ServerStreamingEcho"
+
