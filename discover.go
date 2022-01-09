@@ -13,10 +13,12 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-// this module serves to retrieve information,
+// this file is used to retrieve information,
 // such as services list, proto- files
 // from grpc client connections
-// part of this code was taken from evans or wombat sources
+
+// code was taken from evans sources
+// https://github.com/ktr0731/evans/blob/master/grpc/grpcreflection/reflection.go
 
 var ErrTLSHandshakeFailed = errors.New("TLS handshake failed")
 
