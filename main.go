@@ -32,7 +32,7 @@ func main() {
 	mapping := make(map[string]*grpc.ClientConn)
 	// collected file descriptors
 	fdsCollected := make([]*desc.FileDescriptor, 0)
-	for _, cli := range appConfig.Clients {
+	for _, cli := range appConfig.Endpoints {
 
 		var opts []grpc.DialOption
 		opts = append(opts, grpc.WithTimeout(42*time.Second))
@@ -40,17 +40,17 @@ func main() {
 		opts = append(opts, grpc.WithBlock())
 
 		if cli.CaCert == "" && cli.MyCert == "" && cli.MyCertKey == "" {
-			log.Println("client has insecure mode")
+			log.Println("insecure endpoint")
 			opts = append(opts, grpc.WithInsecure())
 		} else if cli.CaCert != "" && cli.MyCert == "" && cli.MyCertKey == "" {
-			log.Println("client has tls mode")
+			log.Println("tls mode")
 			creds, err := credentials.NewClientTLSFromFile(cli.CaCert, "")
 			if err != nil {
 				panic(err)
 			}
 			opts = append(opts, grpc.WithTransportCredentials(creds))
 		} else if cli.CaCert != "" && cli.MyCert != "" && cli.MyCertKey != "" {
-			log.Println("client has mtls mode")
+			log.Println("mtls mode")
 			// mutual tls
 			certificate, err := tls.LoadX509KeyPair(cli.MyCert, cli.MyCertKey)
 			if err != nil {

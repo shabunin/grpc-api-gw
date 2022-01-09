@@ -1,4 +1,4 @@
-clients:
+endpoints:
   - dial: "localhost:50051"
   - dial: "localhost:50052"
 server:

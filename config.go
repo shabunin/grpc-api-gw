@@ -7,7 +7,7 @@ import (
 )
 
 // client config struct
-type ClientConnConfig struct {
+type EndpointConnConfig struct {
 	Dial      string `yaml:"dial"`
 	CaCert    string `yaml:"ca_cert,omitempty"` // to verify server
 	MyCert    string `yaml:"my_cert,omitempty"` // for mutual tls
@@ -21,9 +21,9 @@ type ServerConnConfig struct {
 }
 
 type AppConfig struct {
-	Clients   []ClientConnConfig `yaml:"clients"`
-	Server    ServerConnConfig   `yaml:"server"`
-	Blacklist []string           `yaml:"blacklist,omitempty"`
+	Endpoints []EndpointConnConfig `yaml:"endpoints"`
+	Server    ServerConnConfig     `yaml:"server"`
+	Blacklist []string             `yaml:"blacklist,omitempty"`
 }
 
 func ReadConfig(filename string) (*AppConfig, error) {
