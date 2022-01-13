@@ -97,11 +97,6 @@ func (s *serverReflectionServer) getSymbols() (svcNames []string, symbolIndex ma
 		sort.Strings(s.serviceNames)
 	})
 
-	keys := make([]string, 0, len(s.symbols))
-	for k := range s.symbols {
-		keys = append(keys, k)
-	}
-
 	return s.serviceNames, s.symbols
 }
 
