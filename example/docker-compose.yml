@@ -27,4 +27,4 @@ services:
     environment:
       - GRPC_GW_CONF=/conf/conf.yml
     ports:
-      - 42000:42000
+      - 42001:42001
