@@ -1,6 +1,6 @@
 endpoints:
-  - dial: "localhost:50051"
-  - dial: "localhost:50052"
+  - dial: "echo:50051"
+  - dial: "greeter:50052"
 server:
   listen: ":42001"
 blacklist:

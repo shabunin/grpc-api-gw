@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net"
+	"os"
 	"strings"
 	"time"
 
@@ -18,10 +19,21 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+func getEnv(key string, defaultVal string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+
+	return defaultVal
+}
+
 func main() {
 	log.Println("hello, friend")
 
-	appConfig, err := ReadConfig("conf.yml")
+	confFile := getEnv("GRPC_GW_CONF", "./conf.yml")
+	log.Println("reading config file ", confFile)
+
+	appConfig, err := ReadConfig(confFile)
 	if err != nil {
 		panic(err)
 	}
@@ -132,7 +144,7 @@ func main() {
 
 		// blacklist
 		for _, bl := range appConfig.Blacklist {
-			if strings.HasPrefix(fullMethodName, bl) {
+			if fullMethodName == bl {
 				log.Println("method is blacklisted")
 				return ctx, nil, grpc.Errorf(codes.Unimplemented, "blacklisted")
 			}

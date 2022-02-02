@@ -1,0 +1,30 @@
+version: '3'
+services:
+  echo:
+    build: 
+      context: ./echo
+      dockerfile: Dockerfile
+    ports:
+      - 50051:50051
+  greeter:
+    build: 
+      context: ./greeter
+      dockerfile: Dockerfile
+    ports:
+      - 50052:50052
+  proxy:
+    build: 
+      context: ../
+      dockerfile: Dockerfile
+    depends_on:
+      - echo
+      - greeter
+    links:
+      - echo
+      - greeter
+    volumes:
+      - ./conf:/conf
+    environment:
+      - GRPC_GW_CONF=/conf/conf.yml
+    ports:
+      - 42000:42000
